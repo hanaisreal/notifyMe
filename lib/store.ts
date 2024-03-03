@@ -1,4 +1,5 @@
 import {create} from 'zustand';
+import {v4 as uuid} from 'uuid';
 
 export type Status = 'TODO' | 'IN_PROGRESS' | 'DONE';
 
@@ -27,7 +28,7 @@ export const useTaskStore = create<State & Actions>((set) => ({
             tasks: [
                 ...state.tasks,
                 {
-                    id: '1',
+                    id: uuid(),
                     title,
                     description,
                     status: 'TODO'
