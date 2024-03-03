@@ -33,11 +33,11 @@ export default function Column({
   }
 
   return (
-    <section className='h-[600px] flex-1'>
+    <section className='flex flex-col h-[400px] flex-grow-0 flex-shrink-0 basis-[300px]'>
       <h2 className='ml-1 font-serif text-2xl font-semibold'>{title}</h2>
 
       <div
-        className='mt-3.5 h-full w-full rounded-xl bg-gray-700/50 p-4'
+        className='flex-1 mt-4 w-full rounded-xl bg-gray-700/50 p-4 overflow-auto'
         onDrop={handleDrop}
         onDragOver={e => e.preventDefault()}
       >
