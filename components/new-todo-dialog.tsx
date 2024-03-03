@@ -16,7 +16,7 @@ import { Textarea } from './ui/textarea'
 import { useTaskStore } from '@/lib/store'
 
 export default function NewTodoDialog() {
-  const addTask = useTaskStore(state => state.addTask) //store에 있는 addTask를 가져옴
+  const addTask = useTaskStore(state => state.addTask)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -27,7 +27,7 @@ export default function NewTodoDialog() {
 
     if (typeof title !== 'string' || typeof description !== 'string') return
 
-    addTask(title, description) //store에 있는 addTask를 호출 
+    addTask(title, description)
   }
 
   return (
