@@ -1,5 +1,6 @@
-"use client"
-import { Button } from "@/components/ui/button"
+'use client'
+
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -7,40 +8,70 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+  DialogTrigger
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Textarea } from './ui/textarea'
+
+import { useTaskStore } from '@/lib/store'
 
 export default function NewTodoDialog() {
+  const addTask = useTaskStore(state => state.addTask) //store에 있는 addTask를 가져옴
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const { title, description } = Object.fromEntries(formData)
+
+    if (typeof title !== 'string' || typeof description !== 'string') return
+
+    addTask(title, description) //store에 있는 addTask를 호출 
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant='secondary' size='sm'>
+          ＋ Add New Todo
+        </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Add New Todo</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you re done.
+            What do you want to get done today?
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
+        <form
+          id='todo-form'
+          className='grid gap-4 py-4'
+          onSubmit={handleSubmit}
+        >
+          <div className='grid grid-cols-4 items-center gap-4'>
+            <Input
+              id='title'
+              name='title'
+              placeholder='Todo title...'
+              className='col-span-4'
+            />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
+          <div className='grid grid-cols-4 items-center gap-4'>
+            <Textarea
+              id='description'
+              name='description'
+              placeholder='Description...'
+              className='col-span-4'
+            />
           </div>
-        </div>
+        </form>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <DialogTrigger asChild>
+            <Button type='submit' size='sm' form='todo-form'>
+              Add Todo
+            </Button>
+          </DialogTrigger>
         </DialogFooter>
       </DialogContent>
     </Dialog>
