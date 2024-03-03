@@ -1,13 +1,9 @@
-import Task from './task'
+'use client'
 
-const tasks = [
-  {
-    id: '1234',
-    title: 'Our first task',
-    description: 'Some description',
-    status: 'DONE'
-  }
-]
+import { useTaskStore } from '@/lib/store'
+import Task from './task'
+import { useMemo } from 'react'
+
 
 export default function Column({
   title,
@@ -16,8 +12,13 @@ export default function Column({
   title: string
   status: string
 }) {
-  const filteredTasks = tasks.filter(task => task.status === status)
 
+  const tasks = useTaskStore(state => state.tasks)  //store에 있는 tasks를 가져옴
+
+  const filteredTasks = useMemo(
+    () => tasks.filter(task => task.status === status), 
+    [tasks, status] //tasks나 status가 변경될 때만 다시 계산해서 가져옴
+)
   return (
     <section className='h-[600px] flex-1'>
       <h2 className='ml-1 font-serif text-2xl font-semibold'>{title}</h2>
