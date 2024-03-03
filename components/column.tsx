@@ -3,6 +3,7 @@
 import { Status, useTaskStore } from '@/lib/store';
 import Task from './task';
 import { useEffect, useMemo } from 'react';
+import NewTask from './new-task';
 
 export default function Column({
   title,
@@ -59,6 +60,10 @@ export default function Column({
             </div>
           ) : null}
         </div>
+
+        <div className='text-sm text-gray-500 inset-x-0 bottom-0 h-16 w-16' >
+        <NewTask title={title} />
+      </div>
       </div>
     </section>
   );

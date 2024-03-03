@@ -15,7 +15,12 @@ import { Textarea } from './ui/textarea'
 
 import { useTaskStore } from '@/lib/store'
 
-export default function NewTodoDialog() {
+//props include title
+interface Props {
+  title: string;
+}
+
+export default function NewTask(props: Props) {
   const addTask = useTaskStore(state => state.addTask)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,11 +38,11 @@ export default function NewTodoDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='secondary' size='sm'>
-          ＋ Add New Todo
+        <Button variant='ghost' size='sm'>
+          ＋ {props.title}
         </Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='sm:max-w-[425px] '>
         <DialogHeader>
           <DialogTitle>Add New Todo</DialogTitle>
           <DialogDescription>
