@@ -1,36 +1,37 @@
-'use client'
+'use client';
 
-import { Status, useTaskStore } from '@/lib/store'
-import Task from './task'
-import { useEffect, useMemo } from 'react'
+import { Status, useTaskStore } from '@/lib/store';
+import Task from './task';
+import { useEffect, useMemo } from 'react';
 
 export default function Column({
   title,
   status
 }: {
-  title: string
+  title: string,
   status: Status
 }) {
-  const tasks = useTaskStore(state => state.tasks)
-  const filteredTasks = useMemo(
-    () => tasks.filter(task => task.status === status),
-    [tasks, status]
-  )
+  // Fetch the currently selected subject and its tasks
+  const currentSubjectTasks = useTaskStore(state => {
+    const currentSubject = state.subjects.find(subject => subject.id === state.currentSubjectId);
+    return currentSubject ? currentSubject.tasks : [];
+  });
 
-  const updateTask = useTaskStore(state => state.updateTask)
-  const dragTask = useTaskStore(state => state.dragTask)
+  const filteredTasks = useMemo(() => currentSubjectTasks.filter(task => task.status === status), [currentSubjectTasks, status]);
 
-  const draggedTask = useTaskStore(state => state.draggedTask)
+  const updateTask = useTaskStore(state => state.updateTask);
+  const dragTask = useTaskStore(state => state.dragTask);
+  const draggedTask = useTaskStore(state => state.draggedTask);
 
   useEffect(() => {
-    useTaskStore.persist.rehydrate()
-  }, [])
+    useTaskStore.persist.rehydrate();
+  }, []);
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    if (!draggedTask) return
-    updateTask(draggedTask, status)
-    dragTask(null)
-  }
+    if (!draggedTask) return;
+    updateTask(draggedTask, status);
+    dragTask(null);
+  };
 
   return (
     <section className='flex flex-col h-[400px] flex-grow-0 flex-shrink-0 basis-[300px]'>
@@ -52,7 +53,7 @@ export default function Column({
             </div>
           )}
 
-          {tasks.length && filteredTasks.length === 0 && status !== 'TODO' ? (
+          {currentSubjectTasks.length && filteredTasks.length === 0 && status !== 'TODO' ? (
             <div className='mt-8 text-center text-sm text-gray-500'>
               <p>Drag your tasks here</p>
             </div>
@@ -60,5 +61,5 @@ export default function Column({
         </div>
       </div>
     </section>
-  )
+  );
 }
