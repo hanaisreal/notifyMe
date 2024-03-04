@@ -13,11 +13,12 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from './ui/textarea'
 
-import { useTaskStore } from '@/lib/store'
+import { Status, useTaskStore } from '@/lib/store'
 
 //props include title
 interface Props {
   title: string;
+  status: Status;
 }
 
 export default function NewTask(props: Props) {
@@ -32,7 +33,7 @@ export default function NewTask(props: Props) {
 
     if (typeof title !== 'string' || typeof description !== 'string') return
 
-    addTask(title, description)
+    addTask(title, props.status, description)
   }
 
   return (

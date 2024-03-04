@@ -26,7 +26,7 @@ export type State = {
 export type Actions = {
   addSubject: (name: string) => void;
   selectSubject: (id: string) => void;
-  addTask: (title: string, description?: string) => void;
+  addTask: (title: string, status: Status, description?: string) => void;
   dragTask: (taskId: string | null) => void;
   removeTask: (taskId: string) => void;
   updateTask: (taskId: string, status: Status) => void;
@@ -43,7 +43,7 @@ export const useTaskStore = create<State & Actions>()(
           subjects: [...state.subjects, { id: uuid(), name, tasks: [] }]
         })),
       selectSubject: id => set({ currentSubjectId: id }),
-      addTask: (title, description = '') => {
+      addTask: (title, status, description = '') => {
         const { currentSubjectId, subjects } = get();
         if (!currentSubjectId) return;
 
@@ -52,7 +52,7 @@ export const useTaskStore = create<State & Actions>()(
             subject.id === currentSubjectId
               ? {
                   ...subject,
-                  tasks: [...subject.tasks, { id: uuid(), title, description, status: 'TODO' }],
+                  tasks: [...subject.tasks, { id: uuid(), title, description, status: status }],
                 }
               : subject
           ),

@@ -18,7 +18,10 @@ export default function Column({
     return currentSubject ? currentSubject.tasks : [];
   });
 
-  const filteredTasks = useMemo(() => currentSubjectTasks.filter(task => task.status === status), [currentSubjectTasks, status]);
+  const filteredTasks = useMemo(() => 
+    currentSubjectTasks.filter(task => 
+      task.status === status), 
+  [currentSubjectTasks, status]);
 
   const updateTask = useTaskStore(state => state.updateTask);
   const dragTask = useTaskStore(state => state.dragTask);
@@ -50,7 +53,7 @@ export default function Column({
         </div>
 
         <div className='text-sm text-gray-500 inset-x-0 bottom-0 h-16 w-16 ' >
-        <NewTask title='Create a new task' />
+        <NewTask title='Create a new task' status={status}/>
       </div>
       </div>
     </section>
