@@ -35,7 +35,7 @@ export default function SidePanel() {
             </div>
 
             <div className='items-center justify-center'>
-            <CountdownClock minutes={1}/>
+            <CountdownClock />
             </div>
         </aside>
 

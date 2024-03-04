@@ -74,3 +74,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaPlay, FaStop, FaRedo } from 'react-icons/fa';
 
-const CountdownClock = ({ minutes = 1 }) => {
+const CountdownClock = ({ minutes = 1}) => {
     const [secondsLeft, setSecondsLeft] = useState(minutes * 60);
     const [isActive, setIsActive] = useState(false);
     const size = 120; // SVG size
