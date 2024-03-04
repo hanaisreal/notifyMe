@@ -3,6 +3,7 @@ import { useTaskStore } from '@/lib/store';
 import NewSubject from "./new-subject";
 import NewTodoDialog from "./new-task";
 import CountdownClock from './clock';
+import { ScrollAreaDemo } from './scrollArea';
 
 export default function SidePanel() {
     const subjects = useTaskStore(state => state.subjects);
@@ -17,22 +18,11 @@ export default function SidePanel() {
             </div>
             <div className="mt-4 self-center">
                 <ul className="mt-4 self-center">
-                    {subjects.map(subject => (
-                        <li key={subject.id} className="mt-2">
-                            <button
-                                className="text-left text-whitetext-left text-white bg-gray-700 rounded px-4 py-2 hover:text-gray-400 cursor-pointer w-48"
-                                onClick={() => selectSubject(subject.id)}
-                            >
-                                {subject.name}
-                            </button>
-                        </li>
-                    ))}
+                    <ScrollAreaDemo subjects={subjects} selectSubject={selectSubject} />
                 </ul>
             </div>
 
-            <hr className='absolute bottom-80 w-48  border-white/50 self-center' />
-
-            <div className='absolute self-center pb-4 bottom-10 w-48'>
+            <div className=' self-center pb-4 bottom-10 w-48'>
             <CountdownClock />
             </div>
         </aside>

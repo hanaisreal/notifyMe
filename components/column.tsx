@@ -35,7 +35,7 @@ export default function Column({
   };
 
   return (
-    <section className='flex flex-col h-[400px] flex-grow-0 flex-shrink-0 basis-[300px]'>
+    <section className='flex flex-col h-[400px] flex-grow-0 flex-shrink-0 basis-[250px]'>
       <h2 className='ml-1 font-serif text-2xl font-semibold'>{title}</h2>
 
       <div
@@ -47,22 +47,10 @@ export default function Column({
           {filteredTasks.map(task => (
             <Task key={task.id} {...task} />
           ))}
-
-          {filteredTasks.length === 0 && status === 'TODO' && (
-            <div className='mt-8 text-center text-sm text-gray-500'>
-              <p>Create a new task</p>
-            </div>
-          )}
-
-          {currentSubjectTasks.length && filteredTasks.length === 0 && status !== 'TODO' ? (
-            <div className='mt-8 text-center text-sm text-gray-500'>
-              <p>Drag your tasks here</p>
-            </div>
-          ) : null}
         </div>
 
-        <div className='text-sm text-gray-500 inset-x-0 bottom-0 h-16 w-16' >
-        <NewTask title={title} />
+        <div className='text-sm text-gray-500 inset-x-0 bottom-0 h-16 w-16 ' >
+        <NewTask title='Create a new task' />
       </div>
       </div>
     </section>

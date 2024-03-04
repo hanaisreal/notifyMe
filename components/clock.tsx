@@ -81,7 +81,7 @@ const CountdownClock = () => {
                 />
                 {/* Countdown text */}
             </svg>
-            <div className='absolute text-center mt-10 pt-2 ' >
+            <div className='text-center mt-10 pt-2 ' >
                 <span style={{ fontSize: '16px' }}>
                         {Math.floor(secondsLeft / 60)}:{('0' + secondsLeft % 60).slice(-2)}
                 </span>
