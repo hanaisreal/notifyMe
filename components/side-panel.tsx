@@ -32,7 +32,7 @@ export default function SidePanel() {
 
             <hr className='absolute bottom-80 w-48  border-white/50 self-center' />
 
-            <div className='absolute self-center pb-4 bottom-20 w-48'>
+            <div className='absolute self-center pb-4 bottom-10 w-48'>
             <CountdownClock />
             </div>
         </aside>
