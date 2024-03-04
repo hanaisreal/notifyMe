@@ -80,12 +80,18 @@ const CountdownClock = () => {
                     transform={`rotate(-90 ${size / 2} ${size / 2})`}
                 />
                 {/* Countdown text */}
+                <text
+                    fill="white"
+                    x="50%"
+                    y="50%"
+                    dy="0.3em" // Adjust this value as needed to vertically center the text
+                    textAnchor="middle"
+                    fontSize="16"
+                >
+                    {Math.floor(secondsLeft / 60)}:{('0' + secondsLeft % 60).slice(-2)}
+                </text>
             </svg>
-            <div className='text-center mt-10 pt-2 ' >
-                <span style={{ fontSize: '16px' }}>
-                        {Math.floor(secondsLeft / 60)}:{('0' + secondsLeft % 60).slice(-2)}
-                </span>
-            </div>
+            
             <div className='mt-2'>
                 {isActive
                     ? <span>focus time</span>
