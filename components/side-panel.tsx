@@ -9,22 +9,18 @@ export default function SidePanel() {
     const selectSubject = useTaskStore(state => state.selectSubject);
 
     return (
-        <div>
-            <aside className='w-[300px] bg-gray-800 p-4 rounded-lg'>
-            <h2 className='text-2xl font-semibold text-white'>Task Manager</h2>
-            <p className='mt-2 text-gray-400'>
-                Manage your tasks and get things done
-            </p>
-            <div className="mt-4">
+        <div className='flex flex-col h-full ' >
+            <aside className='w-[250px] h-full bg-gray-800 p-4 rounded-lg flex flex-col '>
+            <h2 className='text-2xl font-semibold text-white self-center'>Task Manager</h2>
+            <div className="mt-4 self-center">
                 <NewSubject />
             </div>
-            <div className="mt-4">
-                <h3 className='text-xl font-semibold text-white'>Subjects</h3>
-                <ul className="mt-2">
+            <div className="mt-4 self-center">
+                <ul className="mt-4 self-center">
                     {subjects.map(subject => (
                         <li key={subject.id} className="mt-2">
                             <button
-                                className="text-left text-whitetext-left text-white bg-gray-700 rounded px-4 py-2 hover:text-gray-400 cursor-pointer"
+                                className="text-left text-whitetext-left text-white bg-gray-700 rounded px-4 py-2 hover:text-gray-400 cursor-pointer w-48"
                                 onClick={() => selectSubject(subject.id)}
                             >
                                 {subject.name}
@@ -34,7 +30,9 @@ export default function SidePanel() {
                 </ul>
             </div>
 
-            <div className='items-center justify-center'>
+            <hr className='absolute bottom-80 w-48  border-white/50 self-center' />
+
+            <div className='absolute self-center pb-4 bottom-20 w-48'>
             <CountdownClock />
             </div>
         </aside>

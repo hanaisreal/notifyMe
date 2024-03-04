@@ -43,7 +43,7 @@ const CountdownClock = ({ minutes = 1}) => {
     };
 
     return (
-        <div style={{ background: '#fff', borderRadius: '8px', padding: '10px', display: 'inline-block' }}>
+        <div className='flex flex-col  bg-gray-600/50 bg-auto bg-center shadow-sm p-4 mt-4 rounded-lg items-center'>
             <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
                 {/* Background circle */}
                 <circle
@@ -77,7 +77,7 @@ const CountdownClock = ({ minutes = 1}) => {
                     {Math.floor(secondsLeft / 60)}:{('0' + secondsLeft % 60).slice(-2)}
                 </text>
             </svg>
-            <div style={{ marginTop: '15px', textAlign: 'center' }} className='text-gray-500'>
+            <div style={{ marginTop: '15px', textAlign: 'center' }} className='text-gray-500 space-x-4'>
                 {isActive ? (
                     <button onClick={stopTimer} aria-label="Stop">
                         <FaStop />

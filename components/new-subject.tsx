@@ -33,7 +33,7 @@ export default function NewSubject() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='secondary' size='sm'>
+        <Button variant='secondary' size='sm' className='w-48'>
           ＋ Add New Subject
         </Button>
       </DialogTrigger>
