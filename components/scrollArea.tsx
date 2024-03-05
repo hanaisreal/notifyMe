@@ -11,9 +11,9 @@ type Props = {
   };
   export function ScrollAreaDemo({ subjects, selectSubject }: Props) {
     return (
-      <ScrollArea className="h-72 w-48 rounded-md border">
+      <ScrollArea className="h-72 w-48 rounded-md ">
         <div className="p-4">
-          <h4 className="mb-4 text-sm font-medium leading-none">Subjects</h4>
+          <h4 className="mb-4 text-m font-medium leading-none">Subjects</h4>
           {subjects.map((subject) => (
             <React.Fragment key={subject.id}>
               <div className="text-sm">

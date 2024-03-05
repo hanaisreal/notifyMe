@@ -8,7 +8,8 @@ export type Task = {
   id: string
   title: string
   description?: string
-  status: Status
+  status: Status,
+  sessionNotes?: SessionNote[]
 }
 
 export type Subject = {
@@ -17,11 +18,21 @@ export type Subject = {
   tasks: Task[];
 };
 
+export type SessionNote = {
+  id: string; // Unique identifier for the note
+  taskId: string; // ID of the task related to the note, if you need to reference back
+  timeSpent: number; // Time spent in the session, in minutes
+  date: string; // Date of the session note
+  content: string; // The content of the session note
+};
+
 export type State = {
   subjects: Subject[];
   currentSubjectId: string | null; 
+  currentTaskId: string | null; 
   draggedTask: string | null
 }
+
 
 export type Actions = {
   addSubject: (name: string) => void;
@@ -30,6 +41,8 @@ export type Actions = {
   dragTask: (taskId: string | null) => void;
   removeTask: (taskId: string) => void;
   updateTask: (taskId: string, status: Status) => void;
+  selectTask: (taskId: string | null) => void; // Action to select a task
+  addSessionNote: (note: Omit<SessionNote, 'id'>) => void; // Action to add a session note
 }
 
 export const useTaskStore = create<State & Actions>()(
@@ -37,6 +50,7 @@ export const useTaskStore = create<State & Actions>()(
     (set, get) => ({
       subjects: [],
       currentSubjectId: null,
+      currentTaskId: null, // Initialize the currentTaskId
       draggedTask: null,
       addSubject: name =>
         set(state => ({
@@ -71,6 +85,27 @@ export const useTaskStore = create<State & Actions>()(
           ),
         });
       },
+      selectTask: (taskId) => set({ currentTaskId: taskId }),
+      addSessionNote: ({ taskId, timeSpent, date, content }) => {
+        set(state => {
+          return {
+            subjects: state.subjects.map(subject => {
+              return {
+                ...subject,
+                tasks: subject.tasks.map(task => {
+                  if (task.id === taskId) {
+                    const newNote = { id: uuid(), taskId, timeSpent, date, content };
+                    const updatedNotes = task.sessionNotes ? [...task.sessionNotes, newNote] : [newNote];
+                    return { ...task, sessionNotes: updatedNotes };
+                  }
+                  return task;
+                }),
+              };
+            }),
+          };
+        });
+      },
+
       updateTask: (taskId, status) => {
         const { subjects, currentSubjectId } = get();
         if (!currentSubjectId) return;
@@ -89,6 +124,7 @@ export const useTaskStore = create<State & Actions>()(
         });
       },
     }),
+    
     { name: 'task-store', skipHydration: true }
   )
 );
