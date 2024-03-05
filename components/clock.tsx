@@ -1,13 +1,39 @@
 import { useTaskStore } from '@/lib/store';
 import React, { useState, useEffect } from 'react';
 import { FaPlay, FaStop, FaRedo } from 'react-icons/fa';
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
+import { Textarea } from './ui/textarea'
 
 const CountdownClock = () => {
-    const [minutes, setMinutes] = useState(0);
-    const [secondsLeft, setSecondsLeft] = useState(0);
+    const [minutes, setMinutes] = useState(1);
+    const [secondsLeft, setSecondsLeft] = useState(minutes * 60);
+    const [showDialog, setShowDialog] = useState(false);
     const [isActive, setIsActive] = useState(false);
-    const [showModal, setShowModal] = useState(false);
     const [noteContent, setNoteContent] = useState('');
+    const addSessionNote = useTaskStore(state => state.addSessionNote); 
+    const { subjects, currentSubjectId } = useTaskStore(state => ({
+        subjects: state.subjects,
+        currentSubjectId: state.currentSubjectId
+    }));
+
+    const [selectedTaskId, setSelectedTaskId] = useState('');
+    const tasks = subjects.find(subject => subject.id === currentSubjectId)?.tasks || [];
+
+
+    useEffect(() => {
+        // Optionally reset selected task when dialog is shown or subject changes
+        if (tasks.length) setSelectedTaskId(tasks[0].id);
+    }, [showDialog, tasks]);
+
 
     const size = 120; // SVG size
     const strokeWidth = 10;
@@ -24,19 +50,16 @@ const CountdownClock = () => {
         let timer: NodeJS.Timeout;
         if (isActive && secondsLeft > 0) {
             timer = setInterval(() => {
-                setSecondsLeft(secondsLeft => {
-                    const updatedSeconds = secondsLeft - 1;
-                    if (updatedSeconds <= 0) {
-                        setIsActive(false);
-                        setShowModal(true); // Show modal on countdown completion
-                        clearInterval(timer);
-                    }
-                    return updatedSeconds;
-                });
+                setSecondsLeft(secondsLeft - 1);
+                if (secondsLeft <= 1) {
+                    setIsActive(false);
+                    setShowDialog(true); // Open the dialog when the countdown finishes
+                }
             }, 1000);
         }
         return () => clearInterval(timer);
     }, [isActive, secondsLeft]);
+
 
    // Start, stop, and reset timer functions
    const startTimer = () => setIsActive(true);
@@ -44,24 +67,23 @@ const CountdownClock = () => {
    const resetTimer = () => {
        setIsActive(false);
        setSecondsLeft(minutes * 60);
-       setShowModal(false); // Ensure modal is closed on reset
    };
 
    const handleSaveNote = () => {
-       const currentTaskId = useTaskStore.getState().currentTaskId;
-       if(currentTaskId) {
-           useTaskStore.getState().addSessionNote({
-               taskId: currentTaskId,
-               timeSpent: minutes,
-               date: new Date().toISOString(),
-               content: noteContent
-           });
-       }
+    if(selectedTaskId) {
+        addSessionNote({
+            taskId: selectedTaskId,
+            timeSpent: minutes,
+            date: new Date().toISOString(),
+            content: noteContent
+        });
+    }
 
-       // Reset note content and close modal
-       setNoteContent('');
-       setShowModal(false);
-   };
+    // Reset note content and close modal
+    setNoteContent('');
+    setShowDialog(false);
+    setSelectedTaskId('');
+};
 
     const strokeDashoffset = circumference - (circumference * (secondsLeft / (minutes * 60)));
 
@@ -135,27 +157,39 @@ const CountdownClock = () => {
                     <FaRedo />
                 </button>
             </div>
-
-            {showModal && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center">
-                    <div className="bg-white p-4 rounded-lg shadow-lg space-y-3">
-                        <h3 className="text-lg font-semibold">Session Note</h3>
-                        <textarea
-                            className="w-full border rounded p-2"
+            <div>
+            {/* Existing component content */}
+            {showDialog && (
+                <Dialog open={showDialog} onOpenChange={setShowDialog}>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Add New Record</DialogTitle>
+                            <DialogDescription>Add a new session note for your task</DialogDescription>
+                        </DialogHeader>
+                        <select
+                            value={selectedTaskId}
+                            onChange={e => setSelectedTaskId(e.target.value)}
+                            className="mb-4 p-2 rounded border border-gray-300">
+                            {tasks.map(task => (
+                                <option key={task.id} value={task.id}>{task.title}</option>
+                            ))}
+                        </select>
+                        <Textarea
                             placeholder="What did you accomplish?"
                             value={noteContent}
-                            onChange={e => setNoteContent(e.target.value)}
+                            onChange={(e) => setNoteContent(e.target.value)}
                         />
-                        <div className="flex justify-end space-x-2">
-                            <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={handleSaveNote}>Save</button>
-                            <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700" onClick={() => setShowModal(false)}>Cancel</button>
-                        </div>
-                    </div>
-                </div>
+                        <DialogFooter>
+                            <Button onClick={handleSaveNote}>Save Note</Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             )}
-
+        </div>
+        
         </div>
     );
 };
+
 
 export default CountdownClock;
