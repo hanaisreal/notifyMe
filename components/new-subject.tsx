@@ -13,7 +13,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from './ui/textarea'
 
-import { useTaskStore } from '@/lib/store'
+import { useTaskStore } from '@/lib/TaskStore'
 
 export default function NewSubject() {
   const addSubject = useTaskStore(state => state.addSubject)

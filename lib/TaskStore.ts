@@ -37,6 +37,7 @@ export type State = {
 export type Actions = {
   addSubject: (name: string) => void;
   selectSubject: (id: string) => void;
+  removeSubject: (id: string) => void;
   addTask: (title: string, status: Status, description?: string) => void;
   dragTask: (taskId: string | null) => void;
   removeTask: (taskId: string) => void;
@@ -57,6 +58,15 @@ export const useTaskStore = create<State & Actions>()(
           subjects: [...state.subjects, { id: uuid(), name, tasks: [] }]
         })),
       selectSubject: id => set({ currentSubjectId: id }),
+      removeSubject: (id) =>
+        set(state => ({
+          // Filter out the subject with the given id
+          subjects: state.subjects.filter(subject => subject.id !== id),
+          // Reset currentSubjectId if it's the one being removed
+          currentSubjectId: state.currentSubjectId === id ? null : state.currentSubjectId,
+          // Optionally, also handle currentTaskId if needed
+          currentTaskId: state.currentSubjectId === id ? null : state.currentTaskId
+        })),
       addTask: (title, status, description = '') => {
         const { currentSubjectId, subjects } = get();
         if (!currentSubjectId) return;

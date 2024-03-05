@@ -13,7 +13,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from './ui/textarea'
 
-import { Status, useTaskStore } from '@/lib/store'
+import { Status, useTaskStore } from '@/lib/TaskStore'
 
 //props include title
 interface Props {

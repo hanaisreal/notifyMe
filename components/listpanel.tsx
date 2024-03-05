@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { useTaskStore, Subject, SessionNote } from '@/lib/store'; // Ensure all types are imported correctly
+import { useTaskStore, Subject, SessionNote } from '@/lib/TaskStore'; // Ensure all types are imported correctly
 
 const ListPanel: React.FC = () => {
     const { currentSubjectId, currentTaskId, subjects } = useTaskStore(state => ({

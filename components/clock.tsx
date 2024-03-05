@@ -1,4 +1,4 @@
-import { useTaskStore } from '@/lib/store';
+import { useTaskStore } from '@/lib/TaskStore';
 import React, { useState, useEffect } from 'react';
 import { FaPlay, FaStop, FaRedo } from 'react-icons/fa';
 import { Button } from '@/components/ui/button'

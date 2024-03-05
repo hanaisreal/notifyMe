@@ -1,6 +1,6 @@
 'use client';
 
-import { Status, useTaskStore } from '@/lib/store';
+import { Status, useTaskStore } from '@/lib/TaskStore';
 import Task from './task';
 import { useEffect, useMemo } from 'react';
 import NewTask from './new-task';

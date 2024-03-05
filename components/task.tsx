@@ -1,4 +1,4 @@
-import { Status, useTaskStore } from '@/lib/store'
+import { Status, useTaskStore } from '@/lib/TaskStore'
 import { cn } from '@/lib/utils'
 
 export default function Task({
