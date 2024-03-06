@@ -15,7 +15,7 @@ export default function Home() {
         {/* Columns and ListPanel in a vertical layout */}
         <div className='flex-1 flex flex-col'>
           <Columns />
-          <div className='ml-10 mt-4'>
+          <div className='ml-10 mt-4 w-500'>
             <ListPanel />
           </div>
         </div>

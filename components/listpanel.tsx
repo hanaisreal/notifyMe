@@ -39,9 +39,9 @@ const ListPanel: React.FC = () => {
     }
 
     return (
-        <section className='w-5/6 h-[400px] overflow-auto'>
+        <section className='w-[850px] h-[250px] overflow-auto'>
             <h2 className='ml-1 font-serif text-2xl font-semibold text-white'>Records</h2>
-            <div className='mt-4 rounded-xl bg-gray-700/50 p-4 h-full'>
+            <div className='mt-4 rounded-xl bg-gray-700/50 p-4 h-[200px]'>
                 {notesToDisplay.length > 0 ? notesToDisplay : <p className="text-white">No session notes available.</p>}
             </div>
         </section>
