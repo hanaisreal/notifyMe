@@ -8,3 +8,9 @@ This app is designed to help users manage their tasks and monitor their study du
 3. Task managing with AI: AI analyze your priorities and set goals for you.
 4. Dashboard: check how long you have studied by date or by subjects.
 
+
+Dashboard and AI are to be implemented!
+
+Check out the outcome!
+https://github.com/hanaisreal/notifyMe/assets/108045487/3ad35a47-957f-4b3c-9c9b-dbbd50c66968
+
