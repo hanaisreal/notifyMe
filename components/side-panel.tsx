@@ -10,7 +10,7 @@ export default function SidePanel() {
     const selectSubject = useTaskStore(state => state.selectSubject);
 
     return (
-        <div className='flex flex-col h-full w-[250px]' >
+        <div className='flex flex-col' >
             <aside className=' bg-gray-800 p-4 rounded-lg flex flex-col '>
             <h2 className='text-2xl font-semibold font-serif text-white self-center'>Notify Me</h2>
             <div className="mt-6 self-center">
