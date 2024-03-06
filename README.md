@@ -12,5 +12,6 @@ This app is designed to help users manage their tasks and monitor their study du
 Dashboard and AI are to be implemented!
 
 Check out the outcome!
-https://github.com/hanaisreal/notifyMe/assets/108045487/3ad35a47-957f-4b3c-9c9b-dbbd50c66968
+
+https://github.com/hanaisreal/notifyMe/assets/108045487/09fea579-8c32-42a0-8d6b-f86a5f20fdd5
 
